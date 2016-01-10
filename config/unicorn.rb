@@ -5,6 +5,6 @@ stderr_path "#{root}/log/unicorn.log"
 stdout_path "#{root}/log/unicorn.log"
 
 listen "/tmp/unicorn.hashvr_wechat.sock"
-#listen 3000
+listen 8080
 worker_processes 2
 timeout 30

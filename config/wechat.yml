@@ -39,11 +39,11 @@ default: &default
   access_token: "/var/tmp/wechat_access_token"
 
 production:
-  appid: <%= ENV['WECHAT_APPID'] %>
-  secret: <%= ENV['WECHAT_APP_SECRET'] %>
-  token:   <%= ENV['WECHAT_TOKEN'] %>
-  access_token:  <%= ENV['WECHAT_ACCESS_TOKEN'] %>
-
+  appid: "wx6e5ceb8009cc6bd8"
+  secret: "30ceb264767f7763324896ce4eb4d309"
+  token:  "hashvr"
+  access_token: "/var/tmp/wechat_access_token"
+  
 development:
   <<: *default
 

@@ -7,6 +7,11 @@ set :repo_url, 'git@github.com:luozhonghai/hashvr_wechat.git'
 set :deploy_to, "/www/web/#{fetch(:application)}"
 set :deploy_user, "root"
 
+# ---------
+#  bundler
+# ---------
+set :rake, "bundle exec rake"
+
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
@@ -23,19 +28,26 @@ set :deploy_user, "root"
 # set :log_level, :debug
 
 # Default value for :pty is false
-# set :pty, true
+set :pty, true
 
 # Default value for :linked_files is []
 # set :linked_files, %w{config/database.yml}
 
 # Default value for linked_dirs is []
-# set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 # Default value for keep_releases is 5
-# set :keep_releases, 5
+set :keep_releases, 5
+
+# rbenv
+set :rbenv_type, :user
+set :rbenv_ruby, '2.1.5'
+set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
+set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+set :rbenv_roles, :all
 
 namespace :deploy do
 
@@ -59,3 +71,5 @@ namespace :deploy do
   end
 
 end
+
+require './config/boot'

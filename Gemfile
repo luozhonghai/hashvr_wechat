@@ -53,3 +53,7 @@ group :development do
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'capistrano-rbenv', '~> 2.0.2'
 end
+
+# Use Unicorn as the app server
+gem 'unicorn'
+

@@ -1,9 +1,38 @@
 class WechatsController < ActionController::Base
   wechat_responder
-
+  include ApplicationHelper
   # default text responder when no other match
   on :text do |request, content|
-    request.reply.text "echo: #{content}" # Just echo
+    reply_hash = process_info_tuling(content, request[:FromUserName].delete('_'))
+    #request.reply.text "echo: #{content}" # Just echo
+    reply_code = reply_hash[:code].to_s
+
+    case reply_code
+    when "100000"
+      request.reply.text reply_hash[:text]
+    when "200000"
+      final_text = "#{reply_hash[:text]} \n"
+      final_text += reply_hash[:url]
+      request.reply.text final_text
+    when "302000"
+      final_text = "#{reply_hash[:text]} \n"
+      reply_hash[:list].each do |item|
+        final_text += "------ \n"
+        final_text += "#{item[:article]} -- #{item[:source]} \n"
+        final_text += "#{item[:detailurl]} \n"
+      end
+      request.reply.text final_text
+    when "308000"
+      final_text = "#{reply_hash[:text]} \n"
+      reply_hash[:list][0..5].each do |item|
+        final_text += "------ \n"
+        final_text += "#{item[:info]} \n"
+        final_text += "#{item[:detailurl]} \n"
+      end
+      request.reply.text final_text
+    else
+      request.reply.text "echo: #{content}"
+    end
   end
 
   # When receive 'help', will trigger this responder
